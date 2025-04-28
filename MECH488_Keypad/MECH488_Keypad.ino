@@ -42,7 +42,7 @@ int ledPins[1][3] = {
 
 // Servos
 Servo servos[COLS];
-int servoPins[COLS] = {22,24,26};
+int servoPins[COLS] = {13,12,11}; // make sure they're PWM
 
 void setup(){
   Serial.begin(9600);
