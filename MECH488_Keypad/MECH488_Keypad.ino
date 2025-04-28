@@ -10,6 +10,13 @@
 #include <Keypad.h>
 #include <Servo.h>
 
+// Variables
+int delayTime = 500; // delay time to rotate servos
+int restAngle = 90; // neutral position for servo
+int redAngle = 0; // servo angle corresponding to red marble
+int blueAngle = 180; // servo angle corresponding blue marble 
+int debounceTime = 500; 
+
 // Keypad
 const byte ROWS = 1; //one rows
 const byte COLS = 3; //three columns
@@ -84,14 +91,14 @@ void loop(){
   if (digitalRead(goBtnPin) == LOW) {
     Serial.println("GO button pressed. Displaying pattern...");
     displayPattern();
-    delay(500); // debounce
+    delay(debounceTime); // debounce
   }
 
   // if CLEAR button is pressed, reset pattern
   if (digitalRead(clrBtnPin) == LOW) {
     Serial.println("CLEAR button pressed. Resetting...");
     clearPattern();
-    delay(500); // debounce
+    delay(debounceTime); // debounce
   }
 
 }
@@ -100,9 +107,11 @@ void displayPattern() {
   for (int row = 0; row < ROWS; row++) {
     for (int col = 0; col < COLS; col++) {
       int val = pattern[row][col];
-      int angle = (val == 1) ? 0 : 90;
+      int angle = (val == 1) ? redAngle : blueAngle;
       servos[col].write(angle);
-      delay(300); // simulate drop
+      delay(delayTime); 
+      servos[col].write(restAngle); // return to neutral position
+      delay(delayTime);
     }
   }
   Serial.println("Done displaying.");
