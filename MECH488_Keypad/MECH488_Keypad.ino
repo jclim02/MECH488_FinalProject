@@ -1,11 +1,10 @@
-/* @file CustomKeypad.pde
-|| @version 1.0
-|| @author Alexander Brevig
-|| @contact alexanderbrevig@gmail.com
-||
-|| @description
-|| | Demonstrates changing the keypad size and key values.
-|| #
+/* 
+ZOETROOP DROPPER SYSTEM CODE
+Includes
+- 5x5 button array + 2 control buttons
+- 5x5 LED array
+- 5 servos
+- 2 solenoids
 */
 #include <Keypad.h>
 #include <Servo.h>
