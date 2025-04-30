@@ -18,31 +18,39 @@ int blueAngle = 180; // servo angle corresponding blue marble
 int debounceTime = 500; 
 
 // Keypad
-const byte ROWS = 1; //one rows
-const byte COLS = 3; //three columns
+const byte ROWS = 5; //one rows
+const byte COLS = 5; //three columns
 //define the cymbols on the buttons of the keypads
 char hexaKeys[ROWS][COLS] = {
-  {'1','2','3'}
+  {'a','b','c','d','e'},
+  {'f','g','h','i','j'},
+  {'k','l','m','n','o'},
+  {'p','q','r','s','t'},
+  {'u','v','w','x','y'}
 };
-byte rowPins[ROWS] = {53}; //connect to the row pinouts of the keypad
-byte colPins[COLS] = {43,41,39}; //connect to the column pinouts of the keypad
+byte rowPins[ROWS] = {52,50,48,46,44}; //connect to the row pinouts of the keypad
+byte colPins[COLS] = {53,51,49,47,45}; //connect to the column pinouts of the keypad
 
 //initialize an instance of class NewKeypad
 Keypad keypad = Keypad( makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
 
 // Other control buttons
 const int goBtnPin = 2;
-const int clrBtnPin = 3;
+const int clrBtnPin = 4;
 
 // LED and pattern 
-int pattern[1][3];
-int ledPins[1][3] = {
-  {9,10,11}
+int pattern[ROWS][COLS];
+int ledPins[ROWS][COLS] = {
+  {42,40,36,38,34},
+  {43,41,37,39,35},
+  {32,30,26,28,24},
+  {33,31,27,29,25},
+  {21,20,18,19,17}
 };
 
 // Servos
 Servo servos[COLS];
-int servoPins[COLS] = {13,12,11}; // make sure they're PWM
+int servoPins[COLS] = {9,10,11,12,13}; // make sure they're PWM
 
 void setup(){
   Serial.begin(9600);
