@@ -16,6 +16,7 @@ int restAngle = 90; // neutral position for servo
 int redAngle = 0; // servo angle corresponding to red marble
 int blueAngle = 180; // servo angle corresponding blue marble 
 int debounceTime = 500; 
+int solenoidTime = 5000; // Time for solenoid to be pro/retracted
 
 // Keypad
 const byte ROWS = 5; //one rows
@@ -52,6 +53,10 @@ int ledPins[ROWS][COLS] = {
 Servo servos[COLS];
 int servoPins[COLS] = {9,10,11,12,13}; // make sure they're PWM
 
+// Solenoids
+int solenoidPin1 = 7;
+int solenoidPin2 = 6;
+
 void setup(){
   Serial.begin(9600);
   
@@ -72,6 +77,10 @@ void setup(){
   for (int i = 0; i < COLS; i++) {
     servos[i].attach(servoPins[i]);
   }
+
+  // Solenoids
+  pinMode(solenoidPin1, OUTPUT);
+  pinMode(solenoidPin2, OUTPUT);
 
   Serial.println("Ready: Press keys to select black spots. GO to activate. CLEAR to reset.");
 }
@@ -132,5 +141,14 @@ void clearPattern() {
       digitalWrite(ledPins[row][col], LOW);
     }
   }
+
+  // Solenoid 
+  digitalWrite(solenoidPin1, HIGH);      //Switch Solenoid ON
+  digitalWrite(solenoidPin2, HIGH);      //Switch Solenoid ON
+  delay(solenoidTime);                          //Wait 1 Second
+  digitalWrite(solenoidPin1, LOW);      //Switch Solenoid ON
+  digitalWrite(solenoidPin2, LOW);      //Switch Solenoid ON
+  delay(debounceTime);
+
   Serial.println("Pattern cleared.");
 }
