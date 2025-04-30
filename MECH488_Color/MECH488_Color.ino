@@ -49,14 +49,14 @@ void loop()
    Serial.println();
 
    // === Servo Control directly with conditions ===
-   if (redValue < 40) {
+   if (redValue < 40 && blueValue < 70) {
      // This is Color A condition , COLOR A is RED: (26,58,62)
      Serial.println("Detected Color Red");
      myServo.write(0);  // Turn left 45 degrees
      delay(500);
      myServo.write(90);  // Return to neutral
    }
-   else if (redValue > 40) {
+   else if (redValue > 40 && blueValue < 70) {
      // This is Color B condition , COLOR B is GREEN: (55,60,55)
      Serial.println("Detected Color Green");
      myServo.write(180);  // Turn right 45 degrees
