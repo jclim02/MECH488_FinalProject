@@ -10,10 +10,10 @@ Includes
 #include <Servo.h>
 
 // Variables
-int delayTime = 500; // delay time to rotate servos
+int delayTime = 1000; // delay time to rotate servos
 int restAngle = 90; // neutral position for servo
 int redAngle = 0; // servo angle corresponding to red marble
-int blueAngle = 180; // servo angle corresponding blue marble 
+int greenAngle = 180; // servo angle corresponding blue marble 
 int debounceTime = 500; 
 int solenoidTime = 5000; // Time for solenoid to be pro/retracted
 
@@ -29,28 +29,28 @@ char hexaKeys[ROWS][COLS] = {
   {'u','v','w','x','y'}
 };
 byte rowPins[ROWS] = {52,50,48,46,44}; //connect to the row pinouts of the keypad
-byte colPins[COLS] = {53,51,49,47,45}; //connect to the column pinouts of the keypad
+byte colPins[COLS] = {53,51,47,49,45}; //connect to the column pinouts of the keypad
 
 //initialize an instance of class NewKeypad
 Keypad keypad = Keypad( makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
 
 // Other control buttons
-const int goBtnPin = 2;
+const int goBtnPin = 5;
 const int clrBtnPin = 4;
 
 // LED and pattern 
 int pattern[ROWS][COLS];
 int ledPins[ROWS][COLS] = {
-  {42,40,36,38,34},
-  {43,41,37,39,35},
-  {32,30,26,28,24},
-  {33,31,27,29,25},
-  {21,20,18,19,17}
+  {42,40,38,36,34},
+  {43,41,39,37,35},
+  {32,30,28,26,24},
+  {33,31,29,27,25},
+  {21,20,19,18,17}
 };
 
 // Servos
 Servo servos[COLS];
-int servoPins[COLS] = {9,10,11,12,13}; // make sure they're PWM
+int servoPins[COLS] = {13,12,11,10,9}; // make sure they're PWM
 
 // Solenoids
 int solenoidPin1 = 7;
@@ -73,8 +73,9 @@ void setup(){
   }
 
   // Servos
-  for (int i = 0; i < COLS; i++) {
-    servos[i].attach(servoPins[i]);
+  for (int col = 0; col < COLS; col++) {
+    servos[col].attach(servoPins[col]);
+    servos[col].write(restAngle);
   }
 
   // Solenoids
@@ -91,7 +92,7 @@ void loop(){
     for (int row = 0; row < ROWS; row++) {
       for (int col = 0; col < COLS; col++) {
         if (hexaKeys[row][col] == key) {
-          pattern[row][col] = 1;
+          pattern[row][col] = !pattern[row][col];
           digitalWrite(ledPins[row][col], HIGH);
           Serial.print("Selected BLACK at [");
           Serial.print(row);
@@ -123,11 +124,11 @@ void displayPattern() {
   for (int row = 0; row < ROWS; row++) {
     for (int col = 0; col < COLS; col++) {
       int val = pattern[row][col];
-      int angle = (val == 1) ? redAngle : blueAngle;
+      int angle = (val == 1) ? redAngle : greenAngle;
       servos[col].write(angle);
       delay(delayTime); 
       servos[col].write(restAngle); // return to neutral position
-      delay(delayTime);
+      delay(delayTime/4);
     }
   }
   Serial.println("Done displaying.");
@@ -139,6 +140,11 @@ void clearPattern() {
       pattern[row][col] = 0;
       digitalWrite(ledPins[row][col], LOW);
     }
+  }
+
+  // Servos
+  for (int col = 0; col < COLS; col++) {
+    servos[col].write(restAngle);
   }
 
   // Solenoid 
