@@ -123,14 +123,14 @@ void loop(){
 }
 
 void displayPattern() {
-  for (int row = 0; row < ROWS; row++) {
+  for (int row = ROWS; row > 0; row--) {
     for (int col = 0; col < COLS; col++) {
-      int val = pattern[row][col];
+      int val = pattern[row-1][col];
       int angle = (val == 1) ? redAngle : greenAngle;
       servos[col].write(angle);
       delay(delayTime); 
       servos[col].write(restAngle); // return to neutral position
-      delay(delayTime/4);
+      delay(delayTime/10);
     }
   }
   Serial.println("Done displaying.");
