@@ -149,10 +149,10 @@ void clearPattern() {
 
   // Solenoid 
   digitalWrite(solenoidPin1, HIGH);      //Switch Solenoid ON
-  digitalWrite(solenoidPin2, HIGH);      //Switch Solenoid ON
-  delay(solenoidTime);                          //Wait 1 Second
+  digitalWrite(solenoidPin2, HIGH);      //Switch Solenoid OFF
+  delay(solenoidTime);                         
   digitalWrite(solenoidPin1, LOW);      //Switch Solenoid ON
-  digitalWrite(solenoidPin2, LOW);      //Switch Solenoid ON
+  digitalWrite(solenoidPin2, LOW);      //Switch Solenoid OFF
   delay(debounceTime);
 
   Serial.println("Pattern cleared.");
