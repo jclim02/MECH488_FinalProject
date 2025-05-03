@@ -53,8 +53,8 @@ Servo servos[COLS];
 int servoPins[COLS] = {13,12,11,10,9}; // make sure they're PWM
 
 // Solenoids
-int solenoidPin1 = 7;
-int solenoidPin2 = 6;
+// int solenoidPin1 = 7;
+// int solenoidPin2 = 6;
 
 void setup(){
   Serial.begin(9600);
@@ -79,8 +79,10 @@ void setup(){
   }
 
   // Solenoids
-  pinMode(solenoidPin1, OUTPUT);
-  pinMode(solenoidPin2, OUTPUT);
+  // pinMode(solenoidPin1, OUTPUT);
+  // pinMode(solenoidPin2, OUTPUT);
+  // digitalWrite(solenoidPin1, LOW);      //Switch Solenoid OFF
+  // digitalWrite(solenoidPin2, LOW);      //Switch Solenoid OFF
 
   Serial.println("Ready: Press keys to select black spots. GO to activate. CLEAR to reset.");
 }
@@ -148,12 +150,12 @@ void clearPattern() {
   }
 
   // Solenoid 
-  digitalWrite(solenoidPin1, HIGH);      //Switch Solenoid ON
-  digitalWrite(solenoidPin2, HIGH);      //Switch Solenoid OFF
-  delay(solenoidTime);                         
-  digitalWrite(solenoidPin1, LOW);      //Switch Solenoid ON
-  digitalWrite(solenoidPin2, LOW);      //Switch Solenoid OFF
-  delay(debounceTime);
+  // digitalWrite(solenoidPin1, HIGH);      //Switch Solenoid ON
+  // digitalWrite(solenoidPin2, HIGH);      //Switch Solenoid ON
+  // delay(solenoidTime);                         
+  // digitalWrite(solenoidPin1, LOW);      //Switch Solenoid OFF
+  // digitalWrite(solenoidPin2, LOW);      //Switch Solenoid OFF
+  // delay(debounceTime);
 
   Serial.println("Pattern cleared.");
 }
