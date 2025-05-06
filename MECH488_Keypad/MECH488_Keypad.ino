@@ -35,8 +35,8 @@ byte colPins[COLS] = {53,51,47,49,45}; //connect to the column pinouts of the ke
 Keypad keypad = Keypad( makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
 
 // Other control buttons
-const int goBtnPin = 5;
-const int clrBtnPin = 4;
+const int goBtnPin = 7;
+const int clrBtnPin = 6;
 
 // LED and pattern 
 int pattern[ROWS][COLS];
@@ -50,7 +50,7 @@ int ledPins[ROWS][COLS] = {
 
 // Servos
 Servo servos[COLS];
-int servoPins[COLS] = {13,12,11,10,9}; // make sure they're PWM
+int servoPins[COLS] = {12,8,11,10,9}; // make sure they're PWM
 
 // Solenoids
 // int solenoidPin1 = 7;
@@ -124,7 +124,7 @@ void loop(){
 
 void displayPattern() {
   for (int row = ROWS; row > 0; row--) {
-    for (int col = 0; col < COLS; col++) {
+    for (int col = 0; col < COLS-2; col++) {
       int val = pattern[row-1][col];
       int angle = (val == 1) ? redAngle : greenAngle;
       servos[col].write(angle);
